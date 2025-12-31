@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; text-align: center; }
+        .module { background: white; max-width: 500px; margin: 50px auto; padding: 30px; border-radius: 15px; shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input { padding: 10px; width: 60%; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #result { margin-top: 20px; font-weight: bold; color: #28a745; }
+    </style>
+</head>
+<body>
+
+    <div class="module">
+        <h1>Society Impact Tracker</h1>
+        <p>Enter number of volunteers to calculate community hours:</p>
+        <input type="number" id="volunteerCount" placeholder="Number of people...">
+        <button onclick="calculateImpact()">Calculate</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // JavaScript handles the "Click" and talks to the Python Logic
+        function calculateImpact() {
+            const count = document.getElementById('volunteerCount').value;
+            
+            // In a real app, this 'fetch' would call your Python Backend
+            fetch(`/api/impact?count=${count}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = 
+                        "Total Impact: " + data.hours + " hours contributed!";
+                })
+                .catch(err => {
+                    // Simulating logic for this demo
+                    document.getElementById('result').innerText = 
+                        "Impact: " + (count * 4) + " hours (Logic simulated)";
+                });
+        }
+    </script>
+</body>
+</html>
